@@ -6,13 +6,17 @@ import java.io.*;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-public class Main {
-
+public class Main
+{
+	private static final String CSV_FILE_PATH  = "C:\\Users\\KIIT\\OneDrive\\Desktop\\users.csv";
+	private static final String JSON_FILE_PATH = "C:\\Users\\KIIT\\OneDrive\\Desktop\\users.json";
+	
 	public static void main(String[] args) 
 	{
-		 String csvFilePath = "C:\\Users\\KIIT\\OneDrive\\Desktop\\users.csv";
+		 
 //------------------------------------------ UC-3 (Read from csv file) -------------------------------------------
-	        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath))) {
+		
+	        try (Reader reader = Files.newBufferedReader(Paths.get(CSV_FILE_PATH))) {
 	            // Build CsvToBean object
 	            CsvToBean<CSVUser> csvToBean = new CsvToBeanBuilder<CSVUser>(reader)
 	                    .withType(CSVUser.class)
@@ -29,7 +33,9 @@ public class Main {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
+	        
 //------------------------------------------ UC-4 (Writing into csv file) -------------------------------------------
+	        
 	     // Create a list of User objects (POJOs)
 	        List<CSVUser> allusers = Arrays.asList(
 	                new CSVUser("John Doe", "john@example.com", "1234567890", "USA"),
@@ -37,9 +43,19 @@ public class Main {
 	        );
 
 	        // Call the function to write data to CSV
-	        CSVUser.writeDataToCSV(csvFilePath, allusers);
+	        CSVUser.writeDataToCSV(CSV_FILE_PATH, allusers);
 
-	        System.out.println("Data has been written to " + csvFilePath);
+	        System.out.println("Data has been written to " + CSV_FILE_PATH);
+	        
+//------------------------------------------ UC-5 (Read from csv & write into json file) -------------------------------------------	        
+	        
+	        // Read data from CSV
+	        List<CSVUser> users = CSVToJsonConverter.readFromCSV(CSV_FILE_PATH);
+
+	        // Write data to JSON
+	        CSVToJsonConverter.writeToJSON(JSON_FILE_PATH, users);
+
+	        System.out.println("Conversion completed.");
 
 	}
 

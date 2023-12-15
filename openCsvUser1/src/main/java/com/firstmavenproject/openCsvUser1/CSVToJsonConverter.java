@@ -19,7 +19,7 @@ public class CSVToJsonConverter
      * @param:csvFilePath The path to the CSV file.
      * @return:A list of CSVUser objects representing the data from the CSV file.
      */
-    private static List<CSVUser> readFromCSV(String csvFilePath) {
+    static List<CSVUser> readFromCSV(String csvFilePath) {
         List<CSVUser> users = new ArrayList<>();
 
         try (CSVReader csvReader = new CSVReader(new FileReader(csvFilePath))) {
@@ -44,7 +44,7 @@ public class CSVToJsonConverter
      * @param:jsonFilePath The path to the JSON file.
      * @param:The list of User objects to be written to the JSON file.
      */
-    private static void writeToJSON(String jsonFilePath, List<CSVUser> users) {
+    static void writeToJSON(String jsonFilePath, List<CSVUser> users) {
         ObjectMapper objectMapper = new ObjectMapper();
 
         try (FileWriter fileWriter = new FileWriter(jsonFilePath)) {
