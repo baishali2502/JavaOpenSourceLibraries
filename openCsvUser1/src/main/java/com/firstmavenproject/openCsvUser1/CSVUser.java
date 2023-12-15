@@ -1,6 +1,10 @@
 package com.firstmavenproject.openCsvUser1;
 
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.CSVWriter;
+
+import java.io.FileWriter;
+import java.util.List;
 
 public class CSVUser 
 {
@@ -38,5 +42,27 @@ public class CSVUser
                 ", country='" + country + '\'' +
                 '}';
     }
+    
+	/*
+	 * @desc:This method writes into the csv file
+	 * 
+	 * @params:csv file path and the list of users to be added
+	 * 
+	 * @returns:void
+	 */
+    static void writeDataToCSV(String csvFilePath, List<CSVUser> users) {
+        try (CSVWriter csvWriter = new CSVWriter(new FileWriter(csvFilePath))) {
+            // Writing the header
+            String[] header = {"Name", "Email", "Phone", "Country"};
+            csvWriter.writeNext(header);
 
+            // Writing data
+            for (CSVUser user : users) {
+                String[] data = {user.name, user.email, user.phone, user.country};
+                csvWriter.writeNext(data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
